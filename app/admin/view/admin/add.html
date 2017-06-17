@@ -1,0 +1,109 @@
+		<div class="container-fluid" style="padding:15px;">
+			<div class="panel panel-default">
+				<div class="panel-heading">添加管理员</div>
+				<div class="panel-body">
+					<form class="form-horizontal" role="form" action="" method="post">
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">管理员账号</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="inputEmail3" name="username" placeholder="请输入管理员账号">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputPassword" class="col-sm-2 control-label">密码</label>
+							<div class="col-sm-10">
+								<input type="password" name="password" class="form-control" id="inputPassword" placeholder="请输入密码">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputPassword3"  class="col-sm-2 control-label">确认密码</label>
+							<div class="col-sm-10">
+								<input type="password" name="password2" class="form-control" id="inputPassword3" placeholder="请再次输入密码">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputPassword3" class="col-sm-2 control-label">权限</label>
+							<div class="col-sm-10">
+								<?php foreach($menu->controller as $key => $value){?>
+								<div class="auth">
+									<div class="title">
+										<label class="checkbox-inline">
+											<input type="checkbox" id="inlineCheckbox1">
+											<?=$value->name?>
+										</label>
+									</div>
+									<ul class="body">
+										<?php foreach($value->action as $k => $val){?>
+										<li>
+											<label class="checkbox-inline">
+												<input type="checkbox" id="inlineCheckbox2" value="<?=$val->code?>" name="auth[<?=$value->code?>][]"> 
+												<?=$val->name?>
+											</label>
+										</li>
+										<?php }?>										
+										<p class="clear"></p>
+									</ul>
+								</div>
+								<?php }?>								
+						</div>
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-10">
+								<button type="button" class="btn btn-default" onclick="checkform()">确认提交</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		
+		<script>
+			
+			function checkform()
+			{
+				var usernmae = $('input[name="username"]').val();
+				var password = $('input[name="password"]').val();
+				var password2 = $('input[name="password2"]').val();
+				
+				if(usernmae==''){
+					alert('用户名不能为空');
+					return false;
+				}
+				
+				if(usernmae.length < 6 || usernmae.length > 18){
+					alert('用户名为6到18个字符');
+					return false;
+				}
+				
+				if(password==''){
+					alert('密码不能为空');
+					return false;
+				}
+				
+				if(password!=password2){
+					alert('确认密码不一致');
+					return false;
+				}
+				
+				if(password.length < 6 || password.length > 18){
+					alert('密码为6到18个字符');
+					return false;
+				}
+				
+				return $('.form-horizontal').submit();
+			}
+		
+			$('.auth .title input').click(function(){
+				$(this).parents('.auth').find('.body').find('input').prop('checked',$(this).prop('checked'));
+			});
+			
+			$('.auth .body input').click(function(){
+				var len = $(this).parents('.body').find('input:checked').length;
+				if(len>0){
+					$(this).parents('.auth').find('.title').find('input').prop('checked',true);
+				}else{
+					$(this).parents('.auth').find('.title').find('input').prop('checked',false);
+				}
+			});
+			
+			
+		</script>

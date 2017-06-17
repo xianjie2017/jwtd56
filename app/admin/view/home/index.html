@@ -1,0 +1,95 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>DODI后台管理</title>
+		<link href="<?=__PUBLIC__?>css/bootstrap.min.css" rel="stylesheet">
+		<link href="<?=__PUBLIC__?>css/style.css" rel="stylesheet">		
+	</head>
+	<body class="mainbody">
+		<div class="main-header">
+			<div class="container-fluid">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#"><span class="glyphicon glyphicon-tree-conifer"></span>DODI后台管理</a>
+				</div>
+
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">快捷操作 <span class="caret"></span></a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="#">新闻添加</a></li>
+								<li><a href="#">产品添加</a></li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="#">欢迎<?=$_SESSION['admin']['username']?></a></li>
+						<li class="dropdown">
+							<a href="<?=url('login/logout')?>"><span class="glyphicon glyphicon-off" style="margin-right:5px;color:red;"></span>退出登录</a>
+						</li>
+					</ul>
+				</div><!-- /.navbar-collapse -->
+			</div><!-- /.container-fluid -->
+		</div>
+		<div class="main-menu">			
+			<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+				<?php 
+				$level = 0;
+				foreach($xmlObj->controller as $key => $value){
+				if(isset($_SESSION['admin']['auth'][(string)$value->code])){
+				?>
+				<div class="panel panel-default">
+					<div class="panel-heading" role="tab" id="heading<?=$level?>">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="#collapse<?=$level?>" aria-expanded="true" aria-controls="collapse<?=$level?>">
+								<span class="glyphicon glyphicon-th-list"></span>
+								<?=$value->name?>
+								<span class="badge">0</span>
+							</a>
+						</h4>
+					</div>
+					<div id="collapse<?=$level?>" class="panel-collapse collapse <?=$level==0?'in' :''?>" role="tabpanel" aria-labelledby="heading<?=$level?>">
+						<div class="panel-body">
+							<ul class="list-group">
+								<?php foreach($value->action as $k => $val){?>
+									<?php 
+									if($val->show==1){
+										if(in_array((string)$val->code,$_SESSION['admin']['auth'][(string)$value->code])){
+									?>
+									
+									<li class="list-group-item">
+										<a href="<?=url("admin/{$value->code}/{$val->code}")?>" target="mainframe">
+											<span class="glyphicon glyphicon-play"></span><?=$val->name?>
+										</a>
+									</li>
+									<?php }}?>
+								<?php }?>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<?php 
+					$level++;
+				}}
+				?>				
+			</div>
+		</div>
+		<div class="main-body">
+			<iframe src="<?=url('home/welcome')?>" name="mainframe" width="100%" height="100%" frameborder="0"></iframe>
+		</div>
+		<div class="main-footer">DODI网络科技</div>
+		
+		<script src="<?=__PUBLIC__?>js/jquery.js"></script>
+		<script src="<?=__PUBLIC__?>js/bootstrap.min.js"></script>
+	</body>
+</html>
+<script>
+	$(function(){
+		$('.badge').each(function(){		
+			len = $(this).parents('.panel').find('.list-group-item').length;
+			$(this).html(len);			
+		});
+	});
+</script>

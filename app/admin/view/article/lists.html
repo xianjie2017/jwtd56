@@ -1,0 +1,52 @@
+		<div class="container-fluid" style="padding:15px;">
+			<div class="panel panel-default">
+				<div class="panel-heading">文章列表</div>
+				<table class="table table-hover table-striped" style="margin-bottom:0;">
+					<tr class="info">
+						<td>id</td>
+						<td>分类名称</td>
+						<td>标题</td>
+						<td>作者</td>
+						<td>添加时间</td>
+						<td>操作</td>
+					</tr>
+
+					<?php foreach($lists as $key => $value){?>
+					<tr>
+						<td><?=$value['id']?></td>
+						<td><?=$value['cat_name']?></td>
+						<td><?=$value['title']?></td>
+						<td><?=$value['author']?></td>
+						<td><?=$value['create_time']?></td>
+						<td>
+							<a href="<?=url('admin/article/update',array('id'=>$value['id']))?>" style="margin-right:10px;"><span class="glyphicon glyphicon-pencil"></span></a>
+							<a href="javascript:;" onclick="del(<?=$value['id']?>)"><span class="glyphicon glyphicon-trash"></span></a>
+						</td>
+					</tr>
+					<?php }?>
+				</table>
+				
+				<div id="page">
+					<ul class="pagination" style="float:right;">
+						<li><a href="<?=url('lists',['page'=>$prePage])?>">&laquo;</a></li>
+						<?php for($i=$startPage;$i<=$endPage;$i++){?>
+							<?php if($i== $page){?>
+							<li class="active"><span><?=$i?></span></li>
+							<?php }else{?>
+							<li><a href="<?=url('lists',['page'=>$i])?>"><?=$i?></a></li>
+							<?php }?>
+						<?php }?>
+						<li><a href="<?=url('lists',['page'=>$nextPage])?>">&raquo;</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<script>
+		function del(id)
+		{
+			if(confirm('你确定要删除吗？')){
+				var url = "<?=url('delete')?>";
+				window.location.href= url + "&id="+id;
+			}
+		}
+		</script>

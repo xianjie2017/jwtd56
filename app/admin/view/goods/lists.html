@@ -1,0 +1,122 @@
+		<div class="container-fluid" style="padding:15px;">
+			<div class="panel panel-default">
+				<div class="panel-heading">商品列表</div>
+				
+				<div class="panel-body">
+					<form class="form-inline" role="form" action="" method="post">
+					  <div class="form-group">
+						<label for="exampleInputEmail2">标题</label>
+						<input type="text" class="form-control" id="exampleInputEmail2" placeholder="请输入关键字" name="keywords" value="<?=$keywords?>">
+					  </div>
+					  <button type="submit" class="btn btn-default">搜索</button>
+					</form>
+				</div>
+				
+				<table class="table table-hover table-striped" style="margin-bottom:0;">
+					<tr class="info">
+						<td><input type="checkbox" name="checkall" value=''> id</td>
+						<td>图片</td>
+						<td>标题</td>
+						<td>分类名称</td>
+						<td>添加时间</td>
+						<td>操作</td>
+					</tr>
+
+					<?php foreach($page['data'] as $key => $value){?>
+					<tr>
+						<td><input type="checkbox" name="id[]" value='<?=$value['id']?>'> <?=$value['id']?></td>
+						<td>
+							<?php if( ! empty($value['thumb'])){?>
+							<img src="<?=$value['thumb']?>" width="80" height="80">
+							<?php }?>
+						</td>
+						<td><?=str_replace("{$keywords}","<font color='red'>{$keywords}</font>",$value['goods_name'])?></td>
+						<td><?=$value['cate_name']?></td>
+						<td><?=$value['create_time']?></td>
+						<td>
+							<a href="<?=url('admin/goods/update',array('id'=>$value['id']))?>" style="margin-right:10px;"><span class="glyphicon glyphicon-pencil"></span></a>
+							<a href="javascript:;" onclick="del(this,<?=$value['id']?>)"><span class="glyphicon glyphicon-trash"></span></a>
+						</td>
+					</tr>
+					<?php }?>
+				</table>
+				
+				<div id="page">
+					<div class="allAction">
+						<a href="javascript:;" onclick="allDel()">删除<span class="glyphicon glyphicon-trash"></span></a>
+					</div>
+					<?=$page['page']?>
+				</div>
+			</div>
+		</div>
+		<script>
+		function allDel()
+		{
+			var checkboxInput = $('input[name="id[]"]:checked');
+			
+			var idArray = [];
+			checkboxInput.each(function(){
+				idArray.push($(this).val()) ;				
+			});
+			
+			$.ajax({
+				type : 'post', // 传输数据的方式
+				url : '<?=url('delete')?>',  // 服务器的地址
+				dataType:'json', // text,html,xml,json...从服务放回的数据类型
+				data:{id:idArray},
+				success : function(data){
+					console.log(data);	
+					
+					if(data.error === true) {
+						alert(data.msg);
+						return false;
+					}						
+					
+					checkboxInput.each(function(){
+						$(this).parents('tr').remove();						
+					});
+				}
+			});
+		}
+		function del(obj,id)
+		{
+			if(confirm('你确定要删除吗？')){
+				$.ajax({
+					type : 'post', // 传输数据的方式
+					url : '<?=url('delete')?>',  // 服务器的地址
+					dataType:'json', // text,html,xml,json...从服务放回的数据类型
+					data:{id:id},
+					success : function(data){
+						console.log(data);						
+						if(data.error === true) {
+							alert(data.msg);
+							return false;
+						}						
+						$(obj).parents('tr').remove();
+					}
+				});
+				
+				<!-- $.get(); -->
+				<!-- $.post(); -->
+			}
+		}
+		
+		$('input[name="checkall"]').click(function(){
+			// attr 
+			// prop
+			$('input[name="id[]"]').prop('checked',$(this).prop('checked'));
+		});
+		
+		$('input[name="id[]"]').click(function(){
+			var allLength = $('input[name="id[]"]').length;
+			var checkedLength = $('input[name="id[]"]:checked').length;
+			
+			if(allLength > checkedLength){
+				$('input[name="checkall"]').prop('checked',false);
+			}else{
+				$('input[name="checkall"]').prop('checked',true);
+			}
+		});
+		
+		
+		</script>

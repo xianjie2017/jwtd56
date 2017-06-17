@@ -1,0 +1,70 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+		<link href="./statics/front/logo.ico" rel="shortcut icon" />
+        <title>运单查询 - 深圳经纬通达供应链</title>
+    </head>
+    <style>
+        body,v,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,p,blockquote,th,td{margin:0;padding:0;}
+        body{font-size:12px;font-family:"Microsoft Yahei",Heiti,arial,helvetica,sans-serif!important;line-height:19px;color:#333;min-width:320px;position:relative;background:#fff;}
+        fieldset,img{border:0;}
+        img{display:block;}
+        ol,ul{list-style:none;}
+        h1,h2,h3,h4,h5,h6{font-size:100%;}
+        em{font-style:normal;}
+        input,button,select,textarea{outline:none;}
+        /*textarea { resize:none; }*/
+        a{color:#000;text-decoration:none;}
+        a:hover{text-decoration:none;}
+        a:focus{outline:none;-moz-outline:none;}/*解决去除 a 链接点击后有一个虚线的边框出现*/
+
+        /*body,ul,li,dl,dt,dd{padding: 0;margin: 0;}*/
+        .top{height: 50px;background:#009944;width: 100%;color:white;text-align:center;line-height:50px;font-size:30px;}
+        .tbody{padding:20px;font-size: 16px;}
+        .tbody dt{font-size: 18px;font-weight: bold;}
+        .tbody dd{margin-top: 20px;}
+        .tbody dd textarea{width: 100%;height: 80px;}
+        .tbody dd input{border: none; float: left; background: #009944;color: white;width: 50%;height: 35px;}
+        .tbody dd input.reset{background: #666;}
+        .footer{height: 35px;background: #009944;color: white;text-align: center;line-height: 35px;position: fixed;left: 0;bottom: 0;width: 100%;}
+    </style>
+    <body>
+
+        <div class="top">
+			在线查件
+        </div>
+
+        <div class="tbody">
+			<div class="logo"><img src="./statics/front/logo-1.jpg" width="100%"></div>
+            <dl>
+                <dd>
+                    <form action="" method="post">
+                        <textarea name="no" placeholder="收货人电话（或运单号）"><?= ! empty($_POST['no']) ? $_POST['no'] : ''?></textarea>
+                        <p style="margin-top:20px;">
+                            <input type="submit" value="查询">
+                            <input class="reset" type="reset" value="取消">
+                            <p style="clear:both"></p>
+                        </p>
+                    </form>
+                </dd>
+            </dl>
+
+            <?php if( ! empty($result)){ ?>
+            <div class="result" style="margin-top:20px;clear:both;">
+                <p class="title">查询结果：</p>
+                <?php 
+                foreach($result as $key => $value){ 
+                    echo '<div style="padding-top:15px;padding-bottom:5px;">订单号:' . $key . '</div>';
+                    echo str_replace('id="GridView"','style="width:100%"',$value);
+                }
+                ?>
+            </div>
+        </div>
+        <?php } ?>
+
+        <p style="height:35px;"></p>
+
+        <div class="footer">您的需求,我的使命!</div>
+    </body>
+</html>

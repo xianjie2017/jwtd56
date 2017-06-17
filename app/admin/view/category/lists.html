@@ -1,0 +1,30 @@
+<link href="statics/public/treetable/jquery.treetable.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="statics/public/treetable/jquery.treetable.theme.default.css" />
+<div class="container-fluid" style="padding:15px;">
+	<div class="panel panel-default">
+		<div class="panel-heading">商品分类管理</div>
+		<table class="table table-hover table-striped" style="margin-bottom:0;" id="cateTree">
+			<tr class="info">
+				<td>id</td>
+				<td>分类名称</td>
+				<td>操作</td>
+			</tr>
+			<?=$cateTrHtml?>
+		</table>
+	</div>
+</div>
+<script src="statics/public/treetable/jquery.treetable.js"></script>
+<script>
+function del(id)
+{
+	if(confirm("确定要删除吗？"))
+	{
+		var url = "<?=url('admin/category/delete')?>";
+		window.location.href=url+'&id='+id;
+	}
+}
+
+$(function(){
+	$("#cateTree").treetable({ expandable: true });
+});
+</script>

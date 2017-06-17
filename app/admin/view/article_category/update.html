@@ -1,0 +1,28 @@
+		<div class="container-fluid" style="padding:15px;">
+			<div class="panel panel-default">
+				<div class="panel-heading">编辑文章分类</div>
+				<div class="panel-body">
+					<form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data">
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">分类名称</label>
+							<div class="col-sm-10">
+							<input type="text" name="cate_name" class="form-control" id="inputEmail3" placeholder="请输入分类名称" value="<?=$catData['name']?>">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="exampleInputFile" class="col-sm-2 control-label">上传图片</label>
+							<div class="col-sm-10">
+								<input type="file" id="exampleInputFile" name="picFile" class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-10">
+								<input type="hidden" value="<?=$catData['id']?>" name="id">
+								<!--更新数据的时候，要创建一个隐藏表单，传递主键id-->
+								<button type="submit" class="btn btn-default">编辑分类</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>

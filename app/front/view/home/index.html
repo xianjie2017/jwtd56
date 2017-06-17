@@ -1,0 +1,341 @@
+<!--<div class="banner">
+<div class="fullSlide">
+	<div class="bd">
+		<ul>
+			<li _src="url(<?=__PUBLIC__?>images/banner.jpg)"><a href="#"></a></li>
+			<li _src="url(<?=__PUBLIC__?>images/banner.jpg)"><a href="#"></a></li>
+			<li _src="url(<?=__PUBLIC__?>images/banner.jpg)"><a href="#"></a></li>
+		</ul>
+	</div>
+	<div class="hd"><ul></ul></div>
+	<span class="prev"></span>
+	<span class="next"></span>
+</div>
+-->
+<style>
+.la li{width:50px;height:30px;text-align:center;line-height:30px;border:#dedede solid 1px;float:left;}
+</style>
+<ul class="la">
+	<li data="1">1</li>
+	<li data="1" class="cur">2</li>
+	<li data="1" class="cur">3</li>
+</ul>
+
+<ul class="la" style="clear:both;">
+	<li data="2" class="cur">4</li>
+	<li data="2" class="cur">5</li>
+	<li data="2">6</li>
+</ul>
+
+<script>
+$('.la li').click(function(){
+	
+	var array = [];
+	$('.la li.cur').each(function(){
+		if(!array[$(this).attr('data')]){
+			array[$(this).attr('data')] = [];
+		}
+		
+		array[$(this).attr('data')].push($(this).html());
+		
+	});
+	
+	/*var len = array.length;
+	var results = [];
+	var indexs = {};
+	function specialSort(start) {
+		start++;
+		if (start > len - 1) {
+			return;
+		}
+		if (!indexs[start]) {
+			indexs[start] = 0;
+		}
+		if (!(array[start] instanceof Array)) {
+			array[start] = [array[start]];
+		}
+		for (indexs[start] = 0; indexs[start] < array[start].length; indexs[start]++) {
+			specialSort(start);
+			if (start == len - 1) {
+				var temp = [];
+				for (var i = len - 1; i >= 0; i--) {
+					temp.push(array[start - i][indexs[start - i]]);
+				}
+				results.push(temp);
+			}
+		}
+	}
+	specialSort(-1);*/
+	
+	
+	console.log(array);
+});
+
+
+
+/*var array   = [[1,2,3],[4,5]];
+var indexs  = [];
+var current = 0;
+
+function spec(){
+	$.each(array.shift(),function(i,v){	
+		if(array.length > 0){
+			spec();
+		}else{
+			console.log(v)
+		}
+	});
+}
+spec();
+console.log(indexs);*/
+
+/*var len = array.length;
+var results = [];
+var temp = [];
+var current = 0;
+
+function spec(){
+	$.each(array.shift(),function(i,v){	
+		current ++;
+		temp[current] = v;
+		if(array.length > 0){
+			spec();
+		}else{
+			results.push(temp);
+		}
+		temp.shift();
+	})
+}
+spec();
+console.log(results);*/
+/*
+var array = [['A', 'B', 'C'],  ['D', 'E']];
+var len = array.length;
+var results = [];
+var indexs = {};
+function specialSort(start) {
+    start++;
+    if (start > len - 1) {
+        return;
+    }
+    if (!indexs[start]) {
+        indexs[start] = 0;
+    }
+	if (!(array[start] instanceof Array)) {
+        array[start] = [array[start]];
+    }
+    for (indexs[start] = 0; indexs[start] < array[start].length; indexs[start]++) {
+        specialSort(start);
+        if (start == len - 1) {
+            var temp = [];
+            for (var i = len - 1; i >= 0; i--) {
+                if (!(array[start - i] instanceof Array)) {
+                    array[start - i] = [array[start - i]];
+                }
+                temp.push(array[start - i][indexs[start - i]]);
+            }
+            results.push(temp);
+        }
+    }
+}
+ 
+specialSort(-1);
+console.log(results);*/
+</script>
+
+<script type="text/javascript">
+$(".fullSlide").hover(function(){
+    $(this).find(".prev,.next").stop(true, true).fadeTo("show", 0.5)
+},
+function(){
+    $(this).find(".prev,.next").fadeOut()
+});
+$(".fullSlide").slide({
+    titCell: ".hd ul",
+    mainCell: ".bd ul",
+    effect: "fold",
+    autoPlay: true,
+    autoPage: true,
+    trigger: "click",
+    startFun: function(i) {
+        var curLi = jQuery(".fullSlide .bd li").eq(i);
+        if ( !! curLi.attr("_src")) {
+            curLi.css("background-image", curLi.attr("_src")).removeAttr("_src")
+        }
+    }
+});
+</script>
+</div>
+
+<div class="productlist auto">
+ <ul>
+	<?php foreach($rec_goods as $key => $value){?>
+   <li><h5><a href="#"><?=$value['goods_name']?></a></h5>
+    <a href="<?=url(['id'=>$value['id']])?>"><img src="<?=$value['image']?>" /></a></li>
+	<?php }?>
+  <!-- <li><h5><a href="#">门禁控制</a></h5>
+    <a href="#"><img src="<?=__PUBLIC__?>images/pl2.jpg" /></a></li>
+   <li><h5><a href="#">入侵报警</a></h5>
+    <a href="#"><img src="<?=__PUBLIC__?>images/pl3.jpg" /></a></li>
+   <li><h5><a href="#">视频监控</a></h5>
+    <a href="#"><img src="<?=__PUBLIC__?>images/pl4.jpg" /></a></li>
+   <li><h5><a href="#">内部通讯</a></h5>
+    <a href="#"><img src="<?=__PUBLIC__?>images/pl5.jpg" /></a></li>-->
+ </ul>
+</div>
+
+<div class="advantage">
+  <div class="motit auto">
+    <h4>公司优势</h4>
+    <span><a href="#">更多</a></span>
+  </div>
+  <div class="adcon auto">
+    <div class="adc1">
+      <div class="adctit">资深设计和顾问</div>
+      <div class="adccon">我们设计工程师有着丰富的经验和最新的技术知识，可以为用户提供各种量身定制的解...</div>
+      <div class="adcmore"><a href="#" title="查看更多">查看更多</a></div>
+    </div>
+    <div class="adc1 adc2">
+      <div class="adctit">系统集成方案</div>
+      <div class="adccon">工程技术团队由拥有合格资质认证、经验丰富的专业工程师组成，且所有工程项目全程...</div>
+      <div class="adcmore"><a href="#" title="查看更多">查看更多</a></div>
+    </div>
+    <div class="adc1 adc3">
+      <div class="adctit">个性化定制开发</div>
+      <div class="adccon">强大的产品开发团队，员工均为具备5年以上行业经验的资深软件工程师,并与多个国内...</div>
+      <div class="adcmore"><a href="#" title="查看更多">查看更多</a></div>
+    </div>
+    <div class="adc1 adc4">
+      <div class="adctit">24小时技术支持</div>
+      <div class="adccon">强大的产品开发团队，员工均为具备5年以上行业经验的资深软件工程师,并与多个国内...</div>
+      <div class="adcmore"><a href="#" title="查看更多">查看更多</a></div>
+    </div>
+  </div>
+</div>
+
+<div class="homecase">
+  <div class="motit motit2 auto">
+    <h4>成功案例</h4>
+    <span><a href="#">更多</a></span>
+  </div>
+  
+  <div class="rollBox">
+     <div class="LeftBotton" onmousedown="ISL_GoUp()" onmouseup="ISL_StopUp()" onmouseout="ISL_StopUp()"></div>
+     
+     <div class="Cont" id="ISL_Cont">
+      <div class="ScrCont">
+       <div id="List1">
+       
+        <!-- 图片列表 begin -->
+         <div class="pic">
+          <a href="http://www.16css.com/" target="_blank"><img src="<?=__PUBLIC__?>images/1.jpg" width="109" height="87" /></a>
+          <p><a href="http://www.16css.com/" target="_blank">芯片项目</a></p>
+         </div>       
+        
+ <div class="pic">
+          <a href="http://www.16css.com/" target="_blank"><img src="<?=__PUBLIC__?>images/2.jpg" width="109" height="87"  /></a>
+          <p><a href="http://www.16css.com/" target="_blank">酒店项目</a></p>
+         </div>
+         <div class="pic">
+          <a href="http://www.16css.com/" target="_blank"><img src="<?=__PUBLIC__?>images/3.jpg" width="109" height="87" /></a>
+          <p><a href="http://www.16css.com/" target="_blank">银行项目</a></p>
+         </div>
+         <div class="pic">
+          <a href="http://www.16css.com/" target="_blank"><img src="<?=__PUBLIC__?>images/4.jpg" width="109" height="87" /></a>
+          <p><a href="http://www.16css.com/" target="_blank">机场控制中心项目</a></p>
+         </div>
+         <div class="pic">
+          <a href="http://www.16css.com/" target="_blank"><img src="<?=__PUBLIC__?>images/5.jpg" width="109" height="87" /></a>
+          <p><a href="http://www.16css.com/" target="_blank">芯片项目</a></p>
+         </div>
+ <div class="pic">
+          <a href="http://www.16css.com/" target="_blank"><img src="<?=__PUBLIC__?>images/6.jpg" width="109" height="87" /></a>
+          <p><a href="http://www.16css.com/" target="_blank">酒店项目</a></p>
+         </div>      
+         <div class="pic">
+          <a href="http://www.16css.com/" target="_blank"><img src="<?=__PUBLIC__?>images/7.jpg" width="109" height="87" /></a>
+          <p><a href="http://www.16css.com/" target="_blank">银行项目</a></p>
+         </div>
+        <!-- 图片列表 end -->
+        
+       </div>
+       <div id="List2"></div>
+      </div>
+     </div>
+     
+     <div class="RightBotton" onmousedown="ISL_GoDown()" onmouseup="ISL_StopDown()" onmouseout="ISL_StopDown()"></div>
+    </div>
+  <script src="js/js.js"></script>
+</div>
+
+<div class="homemoveus">
+  <div class="motit auto">
+    <h4>走进我们</h4>
+    <span><a href="#">更多</a></span>
+  </div>
+  <div class="homeahout auto">
+    <div class="aboutimg"><img src="<?=__PUBLIC__?>images/aboutimg.jpg" /></div>
+    <div class="ahoutword">
+    <p>瑞辰佳讯致力于提供视频、门禁 、报警、无线通信、综合安保平台等弱电领域的咨询、设计、系统集成、产品销售、培训及维护等服务。</p>
+    <p>通过与国内外知名厂商如Lenel、Commend、Maxiris等合作，我们提供国际一线安防监控产品，提供优质集成及增值服务，致力于工业、能源、军工等行业建设。
+我们以“客户导向、简单公正、合作创新、持续改进”作为企业文化，聚焦核心技术和开放合作，与合作伙伴携手共赢，全心服务客户、服务社会。面向未来，我们以“安防行业一流解决方案和增值 服务提供商”为愿景目标，不断超越，矢志不渝地为客户创造价值。</p>
+    </div>
+    <div class="aboutmore"><a href="#">了解更多</a></div>
+  </div>
+</div>
+
+<div class="homenew">
+<div class="motit motit2 auto">
+    <h4>新闻动态</h4>
+    <span><a href="#">更多</a></span>
+  </div>
+  
+  <div class="honewcon auto">
+    <ul class="honewlist">
+      <li>
+        <div class="newlisttime">
+          <span>2016-03</span>
+          <p>15</p>
+        </div>
+        <div class="newlisttit"><a href="#">瑞辰佳讯荣获安讯士2013年度“北亚区最佳分销奖”</a></div>
+        <div class="newlistcon">2013年10月28~11月1日，全球规模最大，亚洲最具影响力的“第十四届中国国际社会公共安全博览会”在深圳会展中心隆重召开...</div>
+      </li>
+      <li>
+        <div class="newlisttime">
+          <span>2016-03</span>
+          <p>15</p>
+        </div>
+        <div class="newlisttit"><a href="#">瑞辰佳讯荣获安讯士2013年度“北亚区最佳分销奖”</a></div>
+        <div class="newlistcon">2013年10月28~11月1日，全球规模最大，亚洲最具影响力的“第十四届中国国际社会公共安全博览会”在深圳会展中心隆重召开...</div>
+      </li>
+    </ul>
+    
+    <div class="honewtwo">
+      <div class="honewttime">2016-03-15</div>
+      <div class="honewtimg"><img src="<?=__PUBLIC__?>images/newimg.jpg"  alt="热烈庆贺瑞辰佳讯与南方航空公司..."/></div>
+      <div class="honewttit"><a href="#">热烈庆贺瑞辰佳讯与南方航空公司...</a></div>
+    </div>
+  
+  </div>
+</div>
+
+<div class="partner auto">
+  <div class="partit"><span><a href="#">更多</a></span>战略合作伙伴</div>
+  <ul class="parullist">
+    <li><a href="#" title="客户名称"><img src="<?=__PUBLIC__?>images/parlogo.jpg" /></a></li>
+    <li><a href="#" title="客户名称"><img src="<?=__PUBLIC__?>images/parlogo.jpg" /></a></li>
+    <li><a href="#" title="客户名称"><img src="<?=__PUBLIC__?>images/parlogo.jpg" /></a></li>
+    <li><a href="#" title="客户名称"><img src="<?=__PUBLIC__?>images/parlogo.jpg" /></a></li>
+    <li><a href="#" title="客户名称"><img src="<?=__PUBLIC__?>images/parlogo.jpg" /></a></li>
+    <li><a href="#" title="客户名称"><img src="<?=__PUBLIC__?>images/parlogo.jpg" /></a></li>
+    <li><a href="#" title="客户名称"><img src="<?=__PUBLIC__?>images/parlogo.jpg" /></a></li>
+    <li><a href="#" title="客户名称"><img src="<?=__PUBLIC__?>images/parlogo.jpg" /></a></li>
+    <li><a href="#" title="客户名称"><img src="<?=__PUBLIC__?>images/parlogo.jpg" /></a></li>
+    <li><a href="#" title="客户名称"><img src="<?=__PUBLIC__?>images/parlogo.jpg" /></a></li>
+    <li><a href="#" title="客户名称"><img src="<?=__PUBLIC__?>images/parlogo.jpg" /></a></li>
+    <li><a href="#" title="客户名称"><img src="<?=__PUBLIC__?>images/parlogo.jpg" /></a></li>
+    <li><a href="#" title="客户名称"><img src="<?=__PUBLIC__?>images/parlogo.jpg" /></a></li>
+    <li><a href="#" title="客户名称"><img src="<?=__PUBLIC__?>images/parlogo.jpg" /></a></li>
+  </ul>
+</div>
+<div class="clear" style="height:50px;"></div>
